@@ -1,0 +1,5 @@
+/.npm-cache/
+/.reference/
+/tmp/
+/.playwright-mcp/
+/rentzal-*.png
