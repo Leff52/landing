@@ -6,6 +6,7 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "build:pages": "npm run build && node scripts/prepare-pages.mjs",
     "dev": "vinext dev",
     "build": "node --import ./scripts/windows-build-exit.mjs node_modules/vinext/dist/cli.js build",
     "start": "vite preview --host 127.0.0.1 --outDir dist/client",

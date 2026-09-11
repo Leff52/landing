@@ -7,5 +7,5 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   css: { postcss: { plugins: [tailwindcss()] } },
   server: { host: '127.0.0.1', port: 3000, strictPort: true },
-  plugins: [vinext(), sites()],
+  plugins: [vinext(), ...(process.env.GITHUB_ACTIONS ? [] : [sites()])],
 });
