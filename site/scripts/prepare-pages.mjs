@@ -1,4 +1,4 @@
-import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { readdir, readFile, writeFile, mkdir, copyFile } from 'node:fs/promises';
 import { resolve, join, extname } from 'node:path';
 
 // Vinext's basePath export currently skips the root page. Export at the root,
@@ -24,5 +24,13 @@ async function prepare(directory) {
   }
 }
 if (prefix) await prepare(output);
+// Static hosts need real directories for links ending in /privacy/, etc.
+// Keep Vinext's flat exports too, for its own route/RSC resolution.
+for (const name of ['privacy', 'analytics-consent', 'cookies']) {
+  const directory = join(output, name);
+  await mkdir(directory, { recursive: true });
+  await copyFile(join(output, `${name}.html`), join(directory, 'index.html'));
+  await copyFile(join(output, `${name}.rsc`), join(directory, 'index.rsc'));
+}
 await writeFile(join(output, '.nojekyll'), '');
 console.log(`GitHub Pages files ready at ${output} (base: ${prefix || '/'})`);

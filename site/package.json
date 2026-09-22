@@ -6,6 +6,8 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "start:privacy": "node scripts/privacy-server.mjs",
+    "test:privacy": "node --test tests/privacy-server.test.mjs",
     "build:pages": "npm run build && node scripts/prepare-pages.mjs",
     "dev": "vinext dev",
     "build": "node --import ./scripts/windows-build-exit.mjs node_modules/vinext/dist/cli.js build",
