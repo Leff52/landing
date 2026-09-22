@@ -6,6 +6,7 @@ import { CONSENT_DAYS, CONSENT_KEY, consentReady, parseConsent, privacy, type Co
 import { startMetrica, stopMetrica } from '@/lib/metrica';
 
 export function PrivacyControls() {
+  const consentApi = privacy.consentApiUrl || asset('/api/privacy-consent');
   const [open, setOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const [consent, setConsent] = useState<Consent | null>(null);
@@ -70,7 +71,7 @@ export function PrivacyControls() {
     setError('');
     const timeout = setTimeout(() => controller.abort(), 8000);
     try {
-      const response = await fetch(asset('/api/privacy-consent'), {
+      const response = await fetch(consentApi, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ choice: 'accepted', version: privacy.version }),
         signal: controller.signal, credentials: 'omit',
@@ -112,7 +113,7 @@ export function PrivacyControls() {
     }
     const wasActive = stopMetrica(privacy.counterId);
     if (consent?.receiptId) {
-      void fetch(asset('/api/privacy-consent'), {
+      void fetch(consentApi, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true,
         credentials: 'omit', body: JSON.stringify({ choice: 'withdrawn', version: privacy.version, receiptId: consent.receiptId }),
       }).catch(() => { /* Local withdrawal is effective even if the server is unavailable. */ });

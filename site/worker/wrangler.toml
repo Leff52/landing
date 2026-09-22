@@ -1,0 +1,11 @@
+name = "rentzal-consent"
+main = "src/index.ts"
+compatibility_date = "2026-09-22"
+
+[vars]
+SITE_ORIGIN = "https://leff52.github.io"
+CONFIG_VERSION = "2026-09-22.2"
+
+[[kv_namespaces]]
+binding = "CONSENTS"
+id = "bbaf4f9c9268449fa53edd2d129acc58"
