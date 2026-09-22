@@ -18,12 +18,13 @@ export function startMetrica(counterId: string) {
   script.id = 'rentzal-metrica';
   script.async = true;
   script.referrerPolicy = 'no-referrer';
-  script.src = 'https://mc.yandex.ru/metrika/tag.js';
+  script.src = `https://mc.yandex.ru/metrika/tag.js?id=${counterId}`;
   script.onload = () => {
     if (!active || generation !== current) return;
     window.ym?.(Number(counterId), 'init', {
-      defer: true, webvisor: false, clickmap: false, trackLinks: false,
-      trackHash: false, accurateTrackBounce: false, ecommerce: false,
+      ssr: true, defer: true,
+      webvisor: false, clickmap: false, trackLinks: false,
+      trackHash: false, accurateTrackBounce: true, ecommerce: false,
       disableYtm: true, sendTitle: false,
     });
     // Do not forward query strings, fragments, or an external referrer.
